@@ -4,8 +4,11 @@ namespace StreamPHP;
 
 class StreamTest extends \PHPUnit_Framework_TestCase
 {
-    public function testDummy()
-    {
-        $this->assertEquals(1, 1);
-    }
+  public function testDelayForce()
+  {
+      $delay=Stream::delay(function(){return 3;});
+
+      $this->assertInstanceOf('Closure',$delay);
+      $this->assertEquals(3,Stream::force($delay));
+  }
 }
