@@ -51,7 +51,7 @@ class Stream
      */
     public function is_null()
     {
-        return $this->car == null;
+        return $this->car == null && $this->cdr == null;
     }
 
     /**
@@ -67,6 +67,8 @@ class Stream
     }
 
     /**
+     * car
+     * @return mixed
      */
     public function car()
     {
@@ -74,7 +76,8 @@ class Stream
     }
 
     /**
-     * @return self
+     * cdr
+     * @return Stream
      */
     public function cdr()
     {
@@ -82,7 +85,7 @@ class Stream
             return null;
         else {
             $next = self::force($this->cdr);
-            return new self($next->car(), $next->cdr);
+            return $next;
         }
     }
 
@@ -103,6 +106,9 @@ class Stream
     }
 
     /**
+     * filtering stream
+     * @param Closure $pred フィルタ条件の真偽値を返すクロージャ
+     * @return Stream
      */
     public function filter(\Closure $pred) {
         if ($this->is_null())
