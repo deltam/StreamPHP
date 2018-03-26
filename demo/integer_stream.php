@@ -14,13 +14,13 @@ function integers_start_from($n)
     return Stream::cons($n, function() use ($n) {return integers_start_from($n + 1);});
 }
 // 自然数の無限ストリーム
-$integers = integers_start_from(1);
-echo "integers\n";
-display_line($integers, 20);
+$naturals = integers_start_from(1);
+echo "natural numbers\n";
+display_line($naturals, 20);
 
 // 立法数の無限ストリーム
-$squares = $integers->map(function($n) {return $n*$n;});
-echo "integers^2:\n";
+$squares = $naturals->map(function($n) {return $n*$n;});
+echo "square numbers:\n";
 display_line($squares, 20);
 
 
@@ -28,7 +28,7 @@ function divisible($a, $b) {
     return 0 == $a % $b;
 }
 // 7の倍数を除外したストリーム
-$no_sevens = $integers->filter(function($n) {return !divisible($n, 7);});
+$no_sevens = $naturals->filter(function($n) {return !divisible($n, 7);});
 echo "no_sevens:\n";
 display_line($no_sevens, 20);
 
