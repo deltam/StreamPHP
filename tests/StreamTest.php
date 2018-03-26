@@ -46,6 +46,7 @@ class StreamTest extends \PHPUnit_Framework_TestCase
     public function testCdr()
     {
         $s1 = Stream::cons(1, function() {return 2;});
+        $this->assertEquals(1 , $s1->car());
         $this->assertEquals(2 , $s1->cdr());
         $s2 = $this->number_stream(1);
         $this->assertEquals(1, $s2->car());
@@ -79,11 +80,16 @@ class StreamTest extends \PHPUnit_Framework_TestCase
     public function testTake()
     {
         $s = $this->number_stream(1);
-        $ret = $s->take(3);
-        $this->assertCount(3, $ret);
-        $this->assertEquals(1, $ret[0]);
-        $this->assertEquals(2, $ret[1]);
-        $this->assertEquals(3, $ret[2]);
+        $ret1 = $s->take(3);
+        $this->assertCount(3, $ret1);
+        $this->assertEquals(1, $ret1[0]);
+        $this->assertEquals(2, $ret1[1]);
+        $this->assertEquals(3, $ret1[2]);
+        $ret2 = $s->take(3, 10);
+        $this->assertCount(3, $ret2);
+        $this->assertEquals(11, $ret2[0]);
+        $this->assertEquals(12, $ret2[1]);
+        $this->assertEquals(13, $ret2[2]);
     }
 
     public function testIterate()
