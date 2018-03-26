@@ -54,6 +54,6 @@ display_line($primes, 20);
 
 
 // interateによる自然数ストリーム
-$naturals2 = Stream::iterate(function($n) {return $n+1;}, 0);
+$naturals2 = Stream::iterate(function($n) {return $n+1;}, 1);
 echo "natural number(iterate):\n";
 display_line($naturals2, 20);

@@ -90,8 +90,8 @@ class StreamTest extends \PHPUnit_Framework_TestCase
     {
         $s = Stream::iterate(function($n) {return $n+1;}, 0);
         $this->assertInstanceOf(Stream::class, $s);
-        $this->assertEquals(1, $s->car());
-        $this->assertEquals(2, $s->cdr()->car());
-        $this->assertEquals(3, $s->cdr()->cdr()->car());
+        $this->assertEquals(0, $s->car());
+        $this->assertEquals(1, $s->cdr()->car());
+        $this->assertEquals(2, $s->cdr()->cdr()->car());
     }
 }

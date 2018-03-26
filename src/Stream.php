@@ -164,7 +164,7 @@ class Stream
      */
     public static function iterate($fn, $init=0) {
         $val = call_user_func($fn, $init);
-        return self::cons($val, function() use($fn, $val) {
+        return self::cons($init, function() use($fn, $val) {
             return self::iterate($fn, $val);
         });
     }
