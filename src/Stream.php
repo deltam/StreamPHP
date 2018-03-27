@@ -136,15 +136,11 @@ class Stream
      */
     public function take($n, $offset=0)
     {
-        $head = $this;
-        for (; $offset > 0; $offset--)
-            $head = $head->cdr();
-
-        if ($head->is_null() || $n <= 0)
-            return array();
-        else
-            return array_merge(array($head->car()),
-                               $head->cdr()->take($n-1));
+        $ret = array();
+        for ($i=$offset; $i<$n+$offset; $i++) {
+            array_push($ret, $this->ref($i));
+        }
+        return $ret;
     }
 
     /**
@@ -159,18 +155,14 @@ class Stream
         if ($n < 0)
             return null;
 
-        $head = $this;
-        for ($i=0; $i<$n && $head!=null; $i++, $head=$head->cdr()) {
-            if (!($head instanceof Stream)) {
-                $head = null;
-                break;
-            }
-        }
-
-        if ($head instanceof Stream)
-            return $head->car();
+        if ($n == 0)
+            return $this->car();
+        else if ($this->cdr() instanceof Stream)
+            return $this->cdr()->ref($n-1);
+        else if ($n == 1)
+            return $this->cdr();
         else
-            return $head;
+            return null;
     }
 
     /**
