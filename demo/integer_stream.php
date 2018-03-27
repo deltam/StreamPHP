@@ -15,7 +15,7 @@ function integers_start_from($n)
 }
 // 自然数の無限ストリーム
 $naturals = integers_start_from(1);
-echo "natural numbers\n";
+echo "natural numbers:\n";
 display_line($naturals, 20);
 
 // 立法数の無限ストリーム
@@ -57,3 +57,15 @@ display_line($primes, 20);
 $naturals2 = Stream::iterate(function($n) {return $n+1;}, 1);
 echo "natural number(iterate):\n";
 display_line($naturals2, 20);
+
+
+// フィボナッチ数列
+function fib($a, $b)
+{
+    return Stream::cons($a, function() use($a,$b) {
+        return fib($b, $a+$b);
+    });
+}
+$fibs = fib(0,1);
+echo "Fibonacci numbers:\n";
+display_line($fibs, 20);
