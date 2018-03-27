@@ -5,7 +5,9 @@ use StreamPHP\Stream;
 
 function display_line($s, $limit = 20)
 {
-    $s->for_each(function($n) {echo $n." ";}, $limit);
+    foreach($s->take($limit) as $n) {
+        echo $n." ";
+    }
     echo "\n\n";
 }
 

@@ -129,18 +129,6 @@ class Stream
     }
 
     /**
-     */
-    public function for_each(\Closure $fn, $limit=100)
-    {
-        if ($this->is_null() || $limit == 0)
-            return;
-        else {
-            call_user_func($fn, $this->car());
-            $this->cdr()->for_each($fn, $limit - 1);
-        }
-    }
-
-    /**
      * take n items from stream
      * @param int $n
      * @param int $offset
