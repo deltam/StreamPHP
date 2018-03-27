@@ -160,6 +160,32 @@ class Stream
     }
 
     /**
+     * index access for stream
+     * if index out of bounds, return null
+     *
+     * @param int $n
+     * @return mixed
+     */
+    public function ref($n)
+    {
+        if ($n < 0)
+            return null;
+
+        $head = $this;
+        for ($i=0; $i<$n && $head!=null; $i++, $head=$head->cdr()) {
+            if (!($head instanceof Stream)) {
+                $head = null;
+                break;
+            }
+        }
+
+        if ($head instanceof Stream)
+            return $head->car();
+        else
+            return $head;
+    }
+
+    /**
      * iterate
      * @param Closure $fn
      * @param mixed $init

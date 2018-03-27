@@ -98,6 +98,21 @@ class StreamTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(13, $ret2[2]);
     }
 
+    public function testRef()
+    {
+        $ns = $this->number_stream(1);
+        $this->assertEquals(1, $ns->ref(0));
+        $this->assertEquals(2, $ns->ref(1));
+        $this->assertEquals(100, $ns->ref(99));
+        $this->assertNull($ns->ref(-1));
+
+        $s = Stream::cons(1, function() {return 2;});
+        $this->assertNull($s->ref(-1));
+        $this->assertEquals(1, $s->ref(0));
+        $this->assertEquals(2, $s->ref(1));
+        $this->assertNull($s->ref(2));
+    }
+
     public function testIterate()
     {
         $s = Stream::iterate(function($n) {return $n+1;}, 0);
