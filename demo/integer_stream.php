@@ -20,54 +20,14 @@ $naturals = integers_start_from(1);
 echo "natural numbers:\n";
 display_line($naturals, 20);
 
+
 // 立法数の無限ストリーム
 $squares = $naturals->map(function($n) {return $n*$n;});
 echo "square numbers:\n";
 display_line($squares, 20);
 
 
-function divisible($a, $b) {
-    return 0 == $a % $b;
-}
-// 7の倍数を除外したストリーム
-$no_sevens = $naturals->filter(function($n) {return !divisible($n, 7);});
-echo "no_sevens:\n";
-display_line($no_sevens, 20);
-
-
-/** SICP3.5.2 エラトステネスの篩 */
-function sieve($s)
-{
-    return Stream::cons(
-        $s->car(),
-        function() use($s) {
-            return sieve(
-                $s->cdr()->filter(
-                    function($n) use($s) {
-                        return !divisible($n, $s->car());
-                    }));
-        });
-}
-
-// 素数の無限ストリーム
-$primes = sieve(integers_start_from(2));
-echo "primes:\n";
-display_line($primes, 20);
-
-
 // interateによる自然数ストリーム
 $naturals2 = Stream::iterate(function($n) {return $n+1;}, 1);
-echo "natural number(iterate):\n";
+echo "natural numbers(iterate):\n";
 display_line($naturals2, 20);
-
-
-// フィボナッチ数列
-function fib($a, $b)
-{
-    return Stream::cons($a, function() use($a,$b) {
-        return fib($b, $a+$b);
-    });
-}
-$fibs = fib(0,1);
-echo "Fibonacci numbers:\n";
-display_line($fibs, 20);
