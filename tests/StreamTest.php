@@ -35,6 +35,12 @@ class StreamTest extends \PHPUnit_Framework_TestCase
         $s = $this->number_stream(1);
         $this->assertEquals(1, $s->car());
         $this->assertInstanceOf(Stream::class, $s->cdr());
+
+        $s1 = Stream::cons(2, function() {return 3;});
+        $s2 = Stream::cons(1, $s1);
+        $this->assertEquals(1, $s2->car());
+        $this->assertEquals(2, $s2->cdr()->car());
+        $this->assertEquals(3, $s2->cdr()->cdr());
     }
 
     public function testCar()

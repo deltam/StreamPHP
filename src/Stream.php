@@ -41,7 +41,7 @@ class Stream
      */
     private static function force($fn)
     {
-        if ($fn instanceOf \Closure)
+        if ($fn instanceof \Closure)
             return call_user_func($fn);
         else
             return $fn;
@@ -56,12 +56,15 @@ class Stream
 
     /**
      * @param
-     * @return self
+     * @return Stream
      */
     public static function cons($a, $b = null)
     {
         if ($b == null)
             return new self($a, null);
+        else if ($b instanceof Stream) {
+            return self::cons($a, function() use($b) {return $b;});
+        }
         else
             return new self($a, self::delay($b));
     }
@@ -77,7 +80,7 @@ class Stream
 
     /**
      * cdr
-     * @return Stream
+     * @return mixed
      */
     public function cdr()
     {
@@ -127,7 +130,7 @@ class Stream
 
     /**
      */
-    public function for_each($fn, $limit=100)
+    public function for_each(\Closure $fn, $limit=100)
     {
         if ($this->is_null() || $limit == 0)
             return;
@@ -162,7 +165,7 @@ class Stream
      * @param mixed $init
      * @return Stream
      */
-    public static function iterate($fn, $init=0) {
+    public static function iterate(\Closure $fn, $init=0) {
         $val = call_user_func($fn, $init);
         return self::cons($init, function() use($fn, $val) {
             return self::iterate($fn, $val);
