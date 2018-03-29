@@ -41,8 +41,9 @@ function sieve($s)
         });
 }
 
-// 素数の無限ストリーム
 $n2 = $naturals->cdr(); // 2 3 4 5 ...
+
+// 素数の無限ストリーム
 $primes = sieve($n2);
 echo "primes:\n";
 display_line($primes, 20);
