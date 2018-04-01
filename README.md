@@ -55,9 +55,19 @@ display_line($primes, 20);
 // 2 3 5 7 11 13 17 19 23 29 31 37 41 43 47 53 59 61 67 71
 ```
 
+
+ArrayAccess is implemented.
+
+```php
+echo "100th prime:\n";
+echo $primes[99] . "\n";
+
+// 100th prime:
+// 541
+```
+
 ## License
 
 Copyright (c) 2018 Masaru MISUMI (deltam@gmail.com).
 
 Licensed under the MIT License (http://www.opensource.org/licenses/mit-license.php)
-

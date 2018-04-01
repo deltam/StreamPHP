@@ -40,3 +40,6 @@ $n2 = $naturals->cdr(); // 2 3 4 5 ...
 $primes = sieve($n2);
 echo "primes:\n";
 display_line($primes, 20);
+
+echo "100th prime:\n";
+echo $primes[99] . "\n";
