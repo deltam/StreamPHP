@@ -57,6 +57,7 @@ display_line($primes, 20);
 
 ## License
 
-Copyright (c) 2010 deltam (deltam@gmail.com).
+Copyright (c) 2018 Masaru MISUMI (deltam@gmail.com).
 
 Licensed under the MIT License (http://www.opensource.org/licenses/mit-license.php)
+
