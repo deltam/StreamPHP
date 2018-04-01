@@ -1,17 +1,10 @@
 <?php
 require __DIR__ . "/../vendor/autoload.php";
+require __DIR__ . "/_util.php";
 
 use StreamPHP\Stream;
 
-function display_line($s, $limit = 20)
-{
-    foreach($s->take($limit) as $n) {
-        echo $n." ";
-    }
-    echo "\n\n";
-}
-
-/** ニュートン法で2の平方根を出す */
+/// ニュートン法で2の平方根を出す
 echo "sqrt 2\n";
 $root2 = Stream::iterate(function($v) {return $v - (($v*$v - 2)/(2*$v));}, 2.0);
 display_line($root2, 20);

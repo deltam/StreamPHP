@@ -1,15 +1,8 @@
 <?php
 require __DIR__ . "/../vendor/autoload.php";
+require __DIR__ . "/_util.php";
 
 use StreamPHP\Stream;
-
-function display_line($s, $limit = 20)
-{
-    foreach($s->take($limit) as $n) {
-        echo $n." ";
-    }
-    echo "\n\n";
-}
 
 function integers_start_from($n)
 {
@@ -21,7 +14,7 @@ echo "natural numbers:\n";
 display_line($naturals, 20);
 
 
-// 立法数の無限ストリーム
+// 立法数のj無限ストリーム
 $squares = $naturals->map(function($n) {return $n*$n;});
 echo "square numbers:\n";
 display_line($squares, 20);

@@ -1,15 +1,8 @@
 <?php
 require __DIR__ . "/../vendor/autoload.php";
+require __DIR__ . "/_util.php";
 
 use StreamPHP\Stream;
-
-function display_line($s, $limit = 20)
-{
-    foreach($s->take($limit) as $n) {
-        echo $n." ";
-    }
-    echo "\n\n";
-}
 
 // 自然数の無限ストリーム
 $naturals = Stream::iterate(function($n) {return $n+1;}, 1);
