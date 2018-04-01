@@ -1,7 +1,7 @@
 <?php
 namespace StreamPHP;
 
-class Stream
+class Stream implements \ArrayAccess
 {
     /**
      */
@@ -176,5 +176,25 @@ class Stream
         return self::cons($init, function() use($fn, $val) {
             return self::iterate($fn, $val);
         });
+    }
+
+
+    // ArrayAccess
+
+    // read only
+    public function offsetSet($offset, $value) {}
+    public function offsetUnset($offset) {}
+
+    public function offsetExists($offset)
+    {
+        return is_numeric($offset) && 0<=$offset;
+    }
+
+    public function offsetGet($offset)
+    {
+        if (!$this->offsetExists($offset))
+            return null;
+
+        return $this->ref($offset);
     }
 }
