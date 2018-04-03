@@ -130,17 +130,32 @@ class Stream implements \ArrayAccess
 
     /**
      * take n items from stream
+     * return as Stream
      * @param int $n
-     * @param int $offset
-     * @return array
+     * @return Stream
      */
-    public function take($n, $offset=0)
+    public function take($n)
     {
-        $ret = array();
-        for ($i=$offset; $i<$n+$offset; $i++) {
-            array_push($ret, $this->ref($i));
-        }
-        return $ret;
+        if ($n <= 0 || $this->is_null())
+            return null;
+
+        return self::cons($this->car(), function() use($n) {
+            return $this->cdr()->take($n-1);
+        });
+    }
+
+    /**
+     * drop n items from stream
+     * return as Stream
+     * @param int $n
+     * @return Stream
+     */
+    public function drop($n)
+    {
+        for ($head = $this; 0 < $n && !$head->is_null(); $n--, $head = $head->cdr())
+            ;
+
+        return $head;
     }
 
     /**
