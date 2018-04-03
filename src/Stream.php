@@ -109,6 +109,21 @@ class Stream implements \ArrayAccess
     }
 
     /**
+     * Reduce stream
+     * @param Closure $fn reduce func
+     * @param mixed $init
+     * @return mixed
+     */
+    public function reduce(\Closure $fn, $init)
+    {
+        $val = call_user_func($fn, $init, $this->car());
+        if ($this->cdr() == null)
+            return $val;
+        else
+            return $this->cdr()->reduce($fn, $val);
+    }
+
+    /**
      * filtering stream
      * @param Closure $pred フィルタ条件の真偽値を返すクロージャ
      * @return Stream

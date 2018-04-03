@@ -104,6 +104,16 @@ class StreamTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(6, $ret[2]);
     }
 
+    public function testReduce()
+    {
+        $s = $this->number_stream(1);
+        $ten = $s->take(10); // 1 2 ... 10
+        $sum = $ten->reduce(function($acc, $x) {return $acc + $x;}, 0);
+        $this->assertEquals(55, $sum);
+        $str = $ten->reduce(function($acc, $x) {return $acc . $x . " ";}, "");
+        $this->assertEquals("1 2 3 4 5 6 7 8 9 10 ", $str);
+    }
+
     public function testRef()
     {
         $ns = $this->number_stream(1);

@@ -6,8 +6,7 @@ use StreamPHP\Stream;
 // ストリームを出力する
 function display_line($s, $limit = 20)
 {
-    for ($i=0; $i<$limit; $i++) {
-        echo $s[$i] . " ";
-    }
+    echo $s->take($limit)
+           ->reduce(function($acc, $x) {return $acc . $x . " ";}, "");
     echo "\n\n";
 }
