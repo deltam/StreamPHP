@@ -217,7 +217,14 @@ class Stream implements \ArrayAccess
 
     public function offsetExists($offset)
     {
-        return is_numeric($offset) && 0<=$offset;
+        if (!is_numeric($offset) || $offset < 0)
+            return false;
+
+        for ($head = $this; 0<=$offset; $offset--, $head = $head->cdr())
+            if ($head == null)
+                return false;
+
+        return true;
     }
 
     public function offsetGet($offset)

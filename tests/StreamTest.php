@@ -137,4 +137,36 @@ class StreamTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1, $s->cdr()->car());
         $this->assertEquals(2, $s->cdr()->cdr()->car());
     }
+
+    public function testOffsetExists()
+    {
+        $s1 = $this->number_stream(1);
+        $this->assertTrue($s1->offsetExists(0));
+        $this->assertTrue($s1->offsetExists(1));
+        $this->assertTrue($s1->offsetExists(100));
+        $this->assertFalse($s1->offsetExists(-1));
+        $this->assertFalse($s1->offsetExists('one'));
+
+        $s2 = $s1->take(10);
+        $this->assertTrue($s2->offsetExists(0));
+        $this->assertTrue($s2->offsetExists(1));
+        $this->assertTrue($s2->offsetExists(9));
+        $this->assertFalse($s2->offsetExists(10));
+        $this->assertFalse($s2->offsetExists(11));
+    }
+
+    public function testOffsetGet()
+    {
+        $s1 = $this->number_stream(1);
+        $this->assertEquals(1, $s1[0]);
+        $this->assertEquals(2, $s1[1]);
+        $this->assertEquals(100, $s1[99]);
+        $this->assertNull($s1['one']);
+
+        $s2 = $s1->take(10);
+        $this->assertEquals(1, $s2[0]);
+        $this->assertEquals(2, $s2[1]);
+        $this->assertEquals(10, $s2[9]);
+        $this->assertNull($s2[10]);
+    }
 }
