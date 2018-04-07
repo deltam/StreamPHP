@@ -70,6 +70,15 @@ class Stream implements \ArrayAccess
     }
 
     /**
+     * return empty stream
+     * @return Stream
+     */
+    public static function empty()
+    {
+        return self::cons(null, null);
+    }
+
+    /**
      * car
      * @return mixed
      */
@@ -155,7 +164,10 @@ class Stream implements \ArrayAccess
             return null;
 
         return self::cons($this->car(), function() use($n) {
-            return $this->cdr()->take($n-1);
+            if ($this->cdr() == null)
+                return null;
+            else
+                return $this->cdr()->take($n-1);
         });
     }
 
@@ -201,13 +213,34 @@ class Stream implements \ArrayAccess
      * @param mixed $init
      * @return Stream
      */
-    public static function iterate(\Closure $fn, $init=0) {
+    public static function iterate(\Closure $fn, $init=0)
+    {
         $val = call_user_func($fn, $init);
         return self::cons($init, function() use($fn, $val) {
             return self::iterate($fn, $val);
         });
     }
 
+    /**
+     * append stream
+     * @param mixed $item
+     */
+    public function conj($item)
+    {
+        // 空のストリームに追加する場合
+        if ($this->car == null) {
+            $this->car = $item;
+            return $this;
+        }
+
+        $cdr = $this->cdr();
+        return self::cons($this->car(), function() use($cdr, $item) {
+            if ($cdr == null)
+                return self::cons($item, null);
+            else
+                return $cdr->conj($item);
+        });
+    }
 
     // ArrayAccess
 

@@ -43,6 +43,13 @@ class StreamTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(3, $s2->cdr()->cdr());
     }
 
+    public function testEmpty()
+    {
+        $empty = Stream::empty();
+        $this->assertNull($empty->car());
+        $this->assertNull($empty->cdr());
+    }
+
     public function testCar()
     {
         $s = Stream::cons(1, function() {return 2;});
@@ -92,6 +99,15 @@ class StreamTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(2, $ret->cdr()->car());
         $this->assertEquals(3, $ret->cdr()->cdr()->car());
         $this->assertNull($ret->cdr()->cdr()->cdr());
+
+        $s2 = Stream::cons(1, Stream::cons(2, null));
+        $this->assertEquals(1, $s2->car());
+        $this->assertEquals(2, $s2->cdr()->car());
+        $this->assertNull($s2->cdr()->cdr());
+        $s3 = $s2->take(3);
+        $this->assertEquals(1, $s3->car());
+        $this->assertEquals(2, $s3->cdr()->car());
+        $this->assertNull($s3->cdr()->cdr());
     }
 
     public function testDrop()
@@ -136,6 +152,25 @@ class StreamTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(0, $s->car());
         $this->assertEquals(1, $s->cdr()->car());
         $this->assertEquals(2, $s->cdr()->cdr()->car());
+    }
+
+    public function testConj()
+    {
+        $empty = Stream::empty();
+        $s = $empty->conj(1);
+        $this->assertEquals(1, $s->car());
+        $this->assertNull($s->cdr());
+
+        $s2 = $s->conj(2);
+        $this->assertEquals(1, $s2->car());
+        $this->assertNotNull($s2->cdr());
+        $this->assertEquals(2, $s2->cdr()->car());
+        $this->assertNull($s2->cdr()->cdr());
+
+        $s3 = $s2->conj(3);
+        $this->assertNotNull($s3->cdr()->cdr());
+        $this->assertEquals(3, $s3->cdr()->cdr()->car());
+        $this->assertNull($s3->cdr()->cdr()->cdr());
     }
 
     public function testOffsetExists()
