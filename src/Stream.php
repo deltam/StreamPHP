@@ -222,6 +222,33 @@ class Stream implements \ArrayAccess
     }
 
     /**
+     * generate stream from array
+     * @param array $ary
+     * @return Stream
+     */
+    public static function fromArray($ary)
+    {
+        $v = array_shift($ary);
+        if ($v != null) {
+            return self::cons($v, function() use($ary) {
+                return self::fromArray($ary);
+            });
+        }
+        else
+            return null;
+    }
+
+    /**
+     * generate stream from arguments
+     * @param array $items
+     * @return Stream
+     */
+    public static function from(...$items)
+    {
+        return self::fromArray($items);
+    }
+
+    /**
      * append stream
      * @param mixed $item
      */

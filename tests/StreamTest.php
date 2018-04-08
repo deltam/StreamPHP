@@ -154,6 +154,26 @@ class StreamTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(2, $s->cdr()->cdr()->car());
     }
 
+    public function testFromArray()
+    {
+        $s = Stream::fromArray(array(1, 2, 3));
+        $this->assertInstanceOf(Stream::class, $s);
+        $this->assertEquals(1, $s->car());
+        $this->assertEquals(2, $s->cdr()->car());
+        $this->assertEquals(3, $s->cdr()->cdr()->car());
+        $this->assertNull($s->cdr()->cdr()->cdr());
+    }
+
+    public function testFrom()
+    {
+        $s = Stream::from(1, 2, 3);
+        $this->assertInstanceOf(Stream::class, $s);
+        $this->assertEquals(1, $s->car());
+        $this->assertEquals(2, $s->cdr()->car());
+        $this->assertEquals(3, $s->cdr()->cdr()->car());
+        $this->assertNull($s->cdr()->cdr()->cdr());
+    }
+
     public function testConj()
     {
         $empty = Stream::empty();
