@@ -9,7 +9,7 @@ class TransducerTest extends \PHPUnit_Framework_TestCase
 {
     public function testReduce()
     {
-        $s = Stream::fromArray(array(1,2,3));
+        $s = Stream::from(1,2,3);
         $sum = Transducer::reduce(function($result, $input) {
             return $result + $input;
         }, 0, $s);
@@ -18,7 +18,7 @@ class TransducerTest extends \PHPUnit_Framework_TestCase
 
     public function testConj()
     {
-        $s1 = Stream::fromArray(array(1,2,3));
+        $s1 = Stream::from(1,2,3);
         $s2 = Transducer::conj($s1, 4);
         $this->assertEquals(4, $s2->cdr()->cdr()->cdr()->car());
     }
@@ -44,7 +44,7 @@ class TransducerTest extends \PHPUnit_Framework_TestCase
 
     public function testTake()
     {
-        $s = Stream::fromArray(array(1,2,3,4,5,6));
+        $s = Stream::from(1,2,3,4,5,6);
         $takeFn = Transducer::take(3);
         $taken = Transducer::reduce(
             $takeFn('StreamPHP\Transducer::conj'),
@@ -79,7 +79,7 @@ class TransducerTest extends \PHPUnit_Framework_TestCase
             Transducer::filter(function($n) {return $n%2 == 0;}),
             Transducer::map(function($n) {return $n*$n;})
         );
-        $s = Stream::fromArray(array(1,2,3,4,5));
+        $s = Stream::from(1,2,3,4,5);
 
         $transduced = Transducer::transduce(
             $xform,
@@ -98,7 +98,7 @@ class TransducerTest extends \PHPUnit_Framework_TestCase
             Transducer::filter(function($n) {return $n%2 == 0;}),
             Transducer::map(function($n) {return $n*$n;})
         );
-        $s = Stream::fromArray(array(1,2,3,4,5));
+        $s = Stream::from(1,2,3,4,5);
 
         $into = Transducer::into(
             $xform,
